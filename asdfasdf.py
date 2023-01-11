@@ -1,2 +1,0 @@
-asdfasfdasdfasdf
-print("hello world")
