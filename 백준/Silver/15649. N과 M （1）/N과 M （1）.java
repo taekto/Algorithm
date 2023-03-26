@@ -3,40 +3,37 @@ import java.util.Scanner;
 
 public class Main {
 	public static int N, M;
-	public static int[] arr;
 	public static boolean[] visited;
+	public static int[] arr;
 	
-	
-	
-	public static void dfs(int start) {
-		if(start == M) {
-			for(int val : arr) {
-				System.out.print(val+" ");
+	public static void dfs(int count, int idx) {
+		if(count == M) {
+			for(int i=0;i<M;i++) {
+				System.out.print(arr[i]+" ");
 			}
 			System.out.println();
 			return;
 		}
 		
-		for(int i=1;i<=N;i++) {
+		for(int i=0;i<N;i++) {
 			if(!visited[i]) {
 				visited[i] = true;
-				arr[start] = i;
-				dfs(start+1);
+				arr[idx] = i+1;
+				dfs(count+1, idx+1);
 				visited[i] = false;
+				arr[idx] = 0;
 			}
 		}
-		return;
 	}
+	
 	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
+		
 		N = sc.nextInt();
 		M = sc.nextInt();
 		arr = new int[M];
-		visited = new boolean[N+1];
-		dfs(0);
+		visited = new boolean[N];
+		dfs(0,0);
 	}
-	
-
-	
 }
