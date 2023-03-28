@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -56,6 +58,28 @@ public class Solution {
 		}
 	}
 	
+	public static void bfs(int y, int x) {
+		Queue<Node> q = new LinkedList<>();
+		q.offer(new Node(y, x));
+		visited[y][x] = true;
+		while(!q.isEmpty()) {
+			Node node = q.poll();
+			int py = node.getY();
+			int px = node.getX();
+			for(int i=0;i<4;i++) {
+				int ny = py + dy[i];
+				int nx = px + dx[i];
+				if(nx<0 && ny < 0 && nx >= 16 && ny >= 16) continue;
+				if(arr[ny][nx] == 0 && !visited[ny][nx]) {
+					visited[ny][nx] = true;
+					q.offer(new Node(ny,nx));
+				}
+			}
+		}
+	}
+	
+	
+	
 	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -87,7 +111,7 @@ public class Solution {
 //			System.out.println(starty);
 //			System.out.println(endx);
 //			System.out.println(endy);
-			dfs(starty, startx);
+			bfs(starty, startx);
 //			for(int i=0;i<16;i++) {
 //				System.out.println(Arrays.toString(visited[i]));
 //			}
