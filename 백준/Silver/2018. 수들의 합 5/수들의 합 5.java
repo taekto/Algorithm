@@ -9,8 +9,8 @@ public class Main {
 		int start = 1;
 		int end = 1;
 		
-		int count = 1;
-		while(start != N) {
+		int count = 0;
+		while(start <= N) {
 			if(end > N) break;
 			
 			int sum = 0;
