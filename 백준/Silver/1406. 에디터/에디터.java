@@ -10,9 +10,9 @@ public class Main {
         String s = br.readLine();
         Stack<String> leftStack = new Stack<>();
         Stack<String> rightStack = new Stack<>();
-        
+
         StringBuilder sb = new StringBuilder();
-        
+
         for(int i=0;i<s.length();i++) {
             leftStack.add(String.valueOf(s.charAt(i)));
         }
@@ -52,6 +52,6 @@ public class Main {
         for(int i=0;i<resultsize;i++) {
             sb.append(rightStack.pop());
         }
-        System.out.println(sb);
+        System.out.println(sb.toString());
     }
 }
