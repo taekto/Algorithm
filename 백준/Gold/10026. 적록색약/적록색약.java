@@ -56,42 +56,42 @@ public class Main {
         }
     }
 
-//    public static void bfs2(int y, int x) {
-//        visited[y][x] = true;
-//        q.offer(new Pair(y,x));
-//        while(!q.isEmpty()) {
-//            Pair cur = q.poll();
-//            y = cur.getY();
-//            x = cur.getX();
-//            for(int i=0;i<4;i++) {
-//                int ny = y+dy[i];
-//                int nx = x+dx[i];
-//                if(ny < 0 || nx < 0 || ny >= N || nx >= N) {
-//                    continue;
-//                }
-//                else if (visited[ny][nx] == false && arr[ny][nx] == arr[y][x]) {
-//                    if(arr[y][x] == 'R') {
-//                        if(arr[ny][nx] == 'R' || arr[ny][nx] == 'G') {
-//                            visited[ny][nx] = true;
-//                            q.offer(new Pair(ny, nx));
-//                        }
-//                    }
-//                    else if(arr[y][x] == 'G') {
-//                        if(arr[ny][nx] == 'R' || arr[ny][nx] == 'G') {
-//                            visited[ny][nx] = true;
-//                            q.offer(new Pair(ny, nx));
-//                        }
-//                    }
-//                    else if(arr[y][x] == 'B') {
-//                        if(arr[ny][nx] == 'B') {
-//                            visited[ny][nx] = true;
-//                            q.offer(new Pair(ny, nx));
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
+    public static void bfs2(int y, int x) {
+        visited[y][x] = true;
+        q.offer(new Pair(y,x));
+        while(!q.isEmpty()) {
+            Pair cur = q.poll();
+            y = cur.getY();
+            x = cur.getX();
+            for(int i=0;i<4;i++) {
+                int ny = y+dy[i];
+                int nx = x+dx[i];
+                if(ny < 0 || nx < 0 || ny >= N || nx >= N) {
+                    continue;
+                }
+                else if (visited[ny][nx] == false) {
+                    if(arr[y][x] == 'R') {
+                        if(arr[ny][nx] == 'R' || arr[ny][nx] == 'G') {
+                            visited[ny][nx] = true;
+                            q.offer(new Pair(ny, nx));
+                        }
+                    }
+                    else if(arr[y][x] == 'G') {
+                        if(arr[ny][nx] == 'R' || arr[ny][nx] == 'G') {
+                            visited[ny][nx] = true;
+                            q.offer(new Pair(ny, nx));
+                        }
+                    }
+                    else if(arr[y][x] == 'B') {
+                        if(arr[ny][nx] == 'B') {
+                            visited[ny][nx] = true;
+                            q.offer(new Pair(ny, nx));
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     static Queue<Pair> q = new LinkedList<>();
 
@@ -127,16 +127,8 @@ public class Main {
 
         for(int i=0;i<N;i++) {
             for(int j=0;j<N;j++) {
-                if(arr[i][j] == 'R') {
-                    arr[i][j] = 'G';
-                }
-            }
-        }
-
-        for(int i=0;i<N;i++) {
-            for(int j=0;j<N;j++) {
                 if(visited[i][j] == false) {
-                    bfs1(i,j);
+                    bfs2(i,j);
                     count2++;
                 }
             }
