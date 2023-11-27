@@ -118,7 +118,12 @@ public class Main {
                 else if(arr[ny][nx] == '.' && visited[ny][nx] == false) {
                     visited[ny][nx] = true;
                     int a = escape[y][x] +1;
-                    if(a < fire[ny][nx] || fire[ny][nx] == 0) {
+                    if(fire[ny][nx] == 0) {
+                        escape[ny][nx] = a;
+                        q.offer(new Pair(ny,nx));
+                        continue;
+                    }
+                    if(a < fire[ny][nx]) {
                         escape[ny][nx] = a;
                         q.offer(new Pair(ny, nx));
                     }
