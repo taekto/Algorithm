@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -35,7 +36,7 @@ public class Main {
 
     }
 
-    static PriorityQueue<Node> pq = new PriorityQueue<>();
+    static Queue<Node> q = new LinkedList<>();
     static int[] dist = new int[200001];
     static boolean[] visited = new boolean[200001];
 
@@ -45,10 +46,10 @@ public class Main {
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
 
-        pq.offer(new Node(N,0));
+        q.offer(new Node(N,0));
         visited[N] = true;
-        while(!pq.isEmpty()) {
-            Node cur = pq.poll();
+        while(!q.isEmpty()) {
+            Node cur = q.poll();
             int now = cur.getNow();
             int count = cur.getCount();
             if(now == K) {
@@ -60,16 +61,16 @@ public class Main {
 
             if(now*2 <= 200000 && visited[now*2] == false) {
                 visited[now*2] = true;
-                pq.offer(new Node(now*2, count));
+                q.offer(new Node(now*2, count));
             }
 
             if(now-1 >= 0 && visited[now-1] == false) {
                 visited[now-1] = true;
-                pq.offer(new Node(now-1, count+1));
+                q.offer(new Node(now-1, count+1));
             }
             if(now+1 <= 200000 && visited[now+1] == false) {
                 visited[now+1] = true;
-                pq.offer(new Node(now+1, count+1));
+                q.offer(new Node(now+1, count+1));
             }
         }
     }
