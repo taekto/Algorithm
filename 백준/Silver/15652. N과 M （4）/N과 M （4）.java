@@ -1,47 +1,43 @@
-import java.util.Arrays;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-	public static int N, M;
-	public static int[] arr;
-	public static boolean[] visited;
-	public static int[] temp;
-	public static StringBuilder sb = new StringBuilder();
 
-	
-	public static void dfs(int count, int idx) {
-		if(count == M) {
-//			System.out.println(Arrays.toString(temp));
-			for(int i=0;i<temp.length;i++) {
-				sb.append(temp[i]+" ");
-			}
-			sb.append("\n");
-			return;
-		}
-		
-		for(int i=idx;i<N;i++) {
-			temp[count] = arr[i]; 
-			dfs(count+1,i);
-		}
-	}
-	
-	
-	
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		
-		N = sc.nextInt();
-		M = sc.nextInt();
-		arr = new int[N];
-		visited = new boolean[N];
-		temp = new int[M];
-		for(int i=0;i<N;i++) {
-			arr[i] = i+1;
-		}
-		
-//		System.out.println(Arrays.toString(arr));
-		dfs(0, 0);
-		System.out.println(sb);
-		
-	}
+    static int N, M;
+    static int[] arr = new int[10];
+    static boolean[] visited = new boolean[10];
+    static StringBuilder sb = new StringBuilder();
+
+    static void func(int k, int cur) {
+        if(M == k) {
+            for(int i=0;i<M;i++) {
+                sb.append(arr[i]).append(" ");
+            }
+            sb.append("\n");
+            return;
+        }
+
+        for(int i=cur;i<=N;i++) {
+            if(!visited[k]) {
+                arr[k] = i;
+                visited[k] = true;
+                func(k+1, i);
+                visited[k] = false;
+            }
+        }
+
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        func(0, 1);
+        System.out.println(sb.toString());
+
+    }
 }
