@@ -1,47 +1,46 @@
-import java.util.Arrays;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-	public static int N, M;
-	public static int[] arr;
-	public static boolean[] visited;
-	
-	public static void combination(int count, int idx) {
-		if(count == M) {
-			for(int i=0;i<N;i++) {
-				if(visited[i]) {
-					System.out.print(arr[i]+" ");
-				}
-			}
-			System.out.println();
-			return;
-		}
-		if(idx == N) {
-			return;
-		}
-		
-		visited[idx] = true;
-		combination(count+1, idx+1);
-		visited[idx] = false;
-		combination(count, idx+1);
-		
-	}
-	
-	
-	
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		
-		N = sc.nextInt();
-		M = sc.nextInt();
-		arr = new int[N];
-		visited = new boolean[N];
-		for(int i=0;i<N;i++) {
-			arr[i] = i+1;
-		}
-		
-		combination(0,0);
-		
-		
-	}
+
+    static int N, M;
+    static int[] arr = new int[10];
+    static boolean[] visited = new boolean[10];
+    static StringBuilder sb = new StringBuilder();
+
+    static void func(int k) {
+        if(M == k) {
+            for(int i=0;i<M;i++) {
+                sb.append(arr[i]).append(" ");
+            }
+            sb.append("\n");
+            return;
+        }
+
+        int st = 1;
+        if(k != 0) st = arr[k-1]+1;
+
+        for(int i=st;i<=N;i++) {
+            if(!visited[k]) {
+                arr[k] = i;
+                visited[k] = true;
+                func(k+1);
+                visited[k] = false;
+            }
+        }
+
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        func(0);
+        System.out.println(sb.toString());
+
+    }
 }
