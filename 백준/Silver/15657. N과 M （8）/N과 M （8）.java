@@ -1,50 +1,49 @@
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
-	public static int N, M;
-	public static List<Integer> list = new ArrayList<>();
-	public static int[] temp;
-	public static boolean[] visited;
-	public static StringBuilder sb = new StringBuilder();
-	
-	public static void dfs(int count, int idx) {
-		if(count == M) {
-			for(int i=0;i<M;i++) {
-				sb.append(temp[i]+" ");
-			}
-			sb.append("\n");
-			return;
-		}
-//		if(idx == N) {
-//			return;
-//		}
-//		중복없이 두개 고르는 조합
-//		visited[idx] = true; 
-//		dfs(count+1, idx+1);
-//		visited[idx] = false;
-//		dfs(count, idx+1);
-		
-		for(int i=idx;i<N;i++) {
-			temp[count] = list.get(i);
-			dfs(count+1, i);
-		}
-	}
-	
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		N = sc.nextInt();
-		M = sc.nextInt();
-		temp = new int[M];
-		visited = new boolean[N];
-		for(int i=0;i<N;i++) {
-			list.add(sc.nextInt());
-		}
-		list.sort(null);
-		dfs(0,0);
-		System.out.println(sb);
-	}
-	
+
+    static int[] arr;
+    static int[] num;
+    static int N, M;
+    static boolean[] visited = new boolean[10];
+    static StringBuilder sb = new StringBuilder();
+    static void func(int k,int s) {
+        if(k == M) {
+            for(int i=0;i<M;i++) {
+                sb.append(num[i]).append(" ");
+            }
+            sb.append("\n");
+            return;
+        }
+
+        for(int i=s;i<N;i++) {
+                num[k] = arr[i];
+                func(k+1,i);
+        }
+
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        num = new int[N];
+        arr = new int[N];
+        st = new StringTokenizer(br.readLine());
+        for(int i=0;i<N;i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+        Arrays.sort(arr);
+
+        func(0, 0);
+        System.out.println(sb.toString());
+
+    }
+
 }
