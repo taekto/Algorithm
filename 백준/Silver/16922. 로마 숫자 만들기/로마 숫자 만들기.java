@@ -13,7 +13,7 @@ public class Main {
     static boolean[] visited = new boolean[4];
     static void dfs(int depth, int sum, int start) {
         if(depth == N) {
-            if(!list.contains(sum)) list.add(sum);
+            if(!hashSet.contains(sum)) hashSet.add(sum);
             return;
         }
 
@@ -28,7 +28,7 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
         dfs(0,0,0);
-        System.out.println(list.size());
+        System.out.println(hashSet.size());
 
     }
 }
