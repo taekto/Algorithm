@@ -30,23 +30,16 @@ public class Main {
             int y = i/M;
             int x = i%M;
             if(!visited[y][x]) {
-                boolean[][] pre = new boolean[N][M];
-                for(int j=0;j<N;j++) {
-                    pre[j] = Arrays.copyOf(visited[j], M);
+                boolean isOk = true;
+                if(y-1>=0 && visited[y-1][x]) isOk = false;
+                if(y+1<N && visited[y+1][x]) isOk = false;
+                if(x-1>=0 && visited[y][x-1]) isOk = false;
+                if(x+1<M && visited[y][x+1]) isOk = false;
+                if(isOk) {
+                    visited[y][x] = true;
+                    func(k+1,sum+map[y][x],i+1);
+                    visited[y][x] = false;
                 }
-                visited[y][x] = true;
-                if(y-1>=0) visited[y-1][x] = true;
-                if(y+1<N) visited[y+1][x] = true;
-                if(x-1>=0) visited[y][x-1] = true;
-                if(x+1<M) visited[y][x+1] = true;
-                sum+=map[y][x];
-                func(k+1, sum,i+1);
-                sum-=map[y][x];
-                visited[y][x] = false;
-                if(y-1>=0) visited[y-1][x] = pre[y-1][x];
-                if(y+1<N) visited[y+1][x] = pre[y+1][x];
-                if(x-1>=0) visited[y][x-1] = pre[y][x-1];
-                if(x+1<M) visited[y][x+1] = pre[y][x+1];
             }
         }
 
