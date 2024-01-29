@@ -13,7 +13,8 @@ public class Main {
     static int max = Integer.MIN_VALUE;
 
     static void func(int sum) {
-        if(list.size() == 2) {
+        if(list.size() == 3) {
+            sum += list.get(0)*list.get(2);
             max = Math.max(sum, max);
             return;
         }
