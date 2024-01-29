@@ -22,10 +22,9 @@ public class Main {
             return;
         }
 
-        if(idx == N) return;
-
-        func(target,depth+1, idx+1, r+R[idx],g+G[idx],b+B[idx]);
-        func(target,depth,idx+1,r,g,b);
+        for(int i=idx;i<N;i++) {
+            func(target,depth+1,i+1,r+R[i],g+G[i],b+B[i]);
+        }
 
     }
 
