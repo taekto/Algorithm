@@ -32,16 +32,13 @@ public class Main {
 
         arr = new int[N];
         st = new StringTokenizer(br.readLine());
-        int min = Integer.MAX_VALUE;
-        int max = Integer.MIN_VALUE;
+
         for(int i=0;i<N;i++) {
             arr[i] = Integer.parseInt(st.nextToken());
-            min = Math.min(min, arr[i]);
-            max = Math.max(max, arr[i]);
         }
 
         for(int i=2;i<=N;i++) {
-            func(i, 0,0,0,max,min);
+            func(i, 0,0,0,Integer.MAX_VALUE,Integer.MIN_VALUE);
         }
         System.out.println(count);
 
