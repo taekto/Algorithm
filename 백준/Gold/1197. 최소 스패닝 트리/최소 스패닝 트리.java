@@ -1,96 +1,80 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
-class Edge implements Comparable<Edge>{
-	private int nodeA;
-	private int nodeB;
-	private int cost;
-	public int getNodeA() {
-		return nodeA;
-	}
-	public void setNodeA(int nodeA) {
-		this.nodeA = nodeA;
-	}
-	public int getNodeB() {
-		return nodeB;
-	}
-	public void setNodeB(int nodeB) {
-		this.nodeB = nodeB;
-	}
-	public int getCost() {
-		return cost;
-	}
-	public void setCost(int cost) {
-		this.cost = cost;
-	}
-	public Edge(int nodeA, int nodeB, int cost) {
-		super();
-		this.nodeA = nodeA;
-		this.nodeB = nodeB;
-		this.cost = cost;
-	}
-	@Override
-	public int compareTo(Edge o) {
-		// TODO Auto-generated method stub
-		if(this.cost < o.cost) return -1;
-		return 1;
-	}
-	
-	
-}
-
-
+// 크루스칼 알고리즘
 public class Main {
-	
-	
-	public static int[] parent;
-	
-	public static int findParent(int x) {
-		if(x == parent[x]) return x;
-		return parent[x] = findParent(parent[x]);
-	}
-	
-	public static void unionParent(int a, int b) {
-		a = findParent(a);
-		b = findParent(b);
-		if(a < b) parent[b] = a;
-		else parent[a] = b;
-	}
-	
-	
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		
-		// 정점의 갯수, 간선의 갯수
-		int V = sc.nextInt();
-		int E = sc.nextInt();
-		parent = new int[V+1];
-		for(int i=1;i<=V;i++) {
-			parent[i] = i;
-		}
-		List<Edge> edges = new ArrayList<>();
-		
-		// 간선의 갯수 만큼 반복
-		for(int i=0;i<E;i++) {
-			int a = sc.nextInt();
-			int b = sc.nextInt();
-			int cost = sc.nextInt();
-			edges.add(new Edge(a,b,cost));
-		}
-		edges.sort(null);
-		int result = 0;
-		for(int i=0;i<edges.size();i++) {
-			int a = edges.get(i).getNodeA();
-			int b = edges.get(i).getNodeB();
-			int cost = edges.get(i).getCost();
-			if(findParent(a) != findParent(b)) {
-				unionParent(a, b);
-				result += cost;
-			}
-		}
-		System.out.println(result);
-		
-		
-	}
+
+    static class Node implements Comparable<Node> {
+        int from;
+        int to;
+        int value;
+
+        public Node(int from, int to, int value) {
+            this.from = from;
+            this.to = to;
+            this.value = value;
+        }
+
+        @Override
+        public int compareTo(Node o) {
+            if(this.value < o.value) return -1;
+            return 1;
+        }
+
+    }
+
+    static int V,E;
+    static int[] parent;
+
+    static int find(int x) {
+        if(parent[x] == x) return x;
+        return parent[x] = find(parent[x]);
+    }
+
+    static void union(int a, int b) {
+        a = find(a);
+        b = find(b);
+        if(a < b) parent[b] = a;
+        else parent[a] = b;
+    }
+    static int result = 0;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        V = Integer.parseInt(st.nextToken());
+        E = Integer.parseInt(st.nextToken());
+        // 부모 선언후 초기화는 자기 자신
+        parent = new int[V+1];
+        for(int i=1;i<=V;i++) {
+            parent[i] = i;
+        }
+        List<Node> list = new ArrayList<>();
+        for(int i=0;i<E;i++) {
+            st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            int value = Integer.parseInt(st.nextToken());
+            list.add(new Node(u,v,value));
+        }
+        Collections.sort(list);
+        
+        for(int i=0;i<E;i++) {
+            Node cur = list.get(i);
+            int from = cur.from;
+            int to = cur.to;
+            int value = cur.value;
+            if(find(from) == find(to)) continue;
+            union(from, to);
+            result += value;
+        }
+
+        System.out.println(result);
+
+    }
 }
