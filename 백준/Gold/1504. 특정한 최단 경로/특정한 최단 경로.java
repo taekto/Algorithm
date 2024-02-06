@@ -20,7 +20,8 @@ public class Main {
     static int N,E;
     static List<Node>[] list;
     static int[] dist;
-    static final int INF = 200000000;
+    // 0x3f3f3f3f 이거는 왜 안되는거임?
+    static final int INF = 0x3f3f3f3f;
     static int V1, V2;
 
     static int func(int start, int end) {
@@ -67,8 +68,8 @@ public class Main {
         V1 = Integer.parseInt(st.nextToken());
         V2 = Integer.parseInt(st.nextToken());
 
-        long ans1 = func(1, V1) + func(V1, V2) + func(V2, N);
-        long ans2 = func(1, V2) + func(V2, V1) + func(V1, N);
+        long ans1 = (long) func(1, V1) + func(V1, V2) + func(V2, N);
+        long ans2 = (long) func(1, V2) + func(V2, V1) + func(V1, N);
         long ans = Math.min(ans1, ans2);
         if(ans >= INF) System.out.println(-1);
         else System.out.println(ans);
