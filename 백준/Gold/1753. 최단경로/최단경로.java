@@ -6,21 +6,37 @@ import java.util.*;
 public class Main {
 
     static class Node implements Comparable<Node> {
-        int to;
+        int vertex;
         int cost;
-        public Node(int to, int cost) {
-            this.to = to;
+        public Node(int vertex, int cost) {
+            this.vertex = vertex;
             this.cost = cost;
         }
+        @Override
         public int compareTo(Node o) {
             return this.cost - o.cost;
         }
     }
-
     static int V,E,K;
+    static int INF = 0x3f3f3f3f;
     static List<Node>[] list;
     static int[] dist;
-    static int INF = 0x3f3f3f3f;
+
+    static void dijkstra() {
+        PriorityQueue<Node> pq = new PriorityQueue<>();
+        pq.add(new Node(K, 0));
+        dist[K] = 0;
+
+        while(!pq.isEmpty()) {
+            Node cur = pq.poll();
+            if(dist[cur.vertex] != cur.cost) continue;
+            for(Node nxt : list[cur.vertex]) {
+                if(dist[nxt.vertex] <= dist[cur.vertex]+nxt.cost) continue;
+                dist[nxt.vertex] = dist[cur.vertex]+nxt.cost;
+                pq.add(new Node(nxt.vertex, dist[nxt.vertex]));
+            }
+        }
+    }
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -28,8 +44,8 @@ public class Main {
         V = Integer.parseInt(st.nextToken());
         E = Integer.parseInt(st.nextToken());
         K = Integer.parseInt(br.readLine());
-        dist = new int[V+1];
         list = new ArrayList[V+1];
+        dist = new int[V+1];
         Arrays.fill(dist, INF);
         for(int i=1;i<=V;i++) {
             list[i] = new ArrayList<>();
@@ -38,31 +54,14 @@ public class Main {
             st = new StringTokenizer(br.readLine());
             int u = Integer.parseInt(st.nextToken());
             int v = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
-            list[u].add(new Node(v, w));
+            int cost = Integer.parseInt(st.nextToken());
+            list[u].add(new Node(v, cost));
         }
 
-        PriorityQueue<Node> pq = new PriorityQueue<>();
-        dist[K] = 0;
-        pq.add(new Node(K,0));
-
-        while(!pq.isEmpty()) {
-            Node cur = pq.poll();
-            if(dist[cur.to] != cur.cost) continue;
-
-            for(Node nxt : list[cur.to]) {
-                if(dist[nxt.to] <= dist[cur.to]+nxt.cost) continue;
-                // cur를 거쳐가는 것이 더 작은 값을 가질 경우
-                // dist[nxt.to]을 갱신하고 우선순위 큐에 추가
-                dist[nxt.to] =  dist[cur.to] + nxt.cost;
-                pq.add(new Node(nxt.to, dist[nxt.to]));
-            }
-        }
-
+        dijkstra();
         for(int i=1;i<=V;i++) {
             if(dist[i] == INF) System.out.println("INF");
             else System.out.println(dist[i]);
         }
-
     }
 }
