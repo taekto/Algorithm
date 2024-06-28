@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Main {
 
-    static class Node implements Comparable<Node> {
+    static class Node implements Comparable<Node>{
         int vertex;
         int cost;
         public Node(int vertex, int cost) {
@@ -17,9 +17,9 @@ public class Main {
             return this.cost - o.cost;
         }
     }
-    static int V,E,K;
-    static int INF = 0x3f3f3f3f;
+    static int V, E, K;
     static List<Node>[] list;
+    static final int INF = 0x3f3f3f3f;
     static int[] dist;
 
     static void dijkstra() {
@@ -36,6 +36,7 @@ public class Main {
                 pq.add(new Node(nxt.vertex, dist[nxt.vertex]));
             }
         }
+
     }
 
     public static void main(String[] args) throws IOException {
@@ -55,9 +56,8 @@ public class Main {
             int u = Integer.parseInt(st.nextToken());
             int v = Integer.parseInt(st.nextToken());
             int cost = Integer.parseInt(st.nextToken());
-            list[u].add(new Node(v, cost));
+            list[u].add(new Node(v,cost));
         }
-
         dijkstra();
         for(int i=1;i<=V;i++) {
             if(dist[i] == INF) System.out.println("INF");
